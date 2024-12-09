@@ -6,5 +6,12 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Mi
 
 class PreventRequestsDuringMaintenance extends Middleware
 {
-    // You can add custom logic here if needed
+    /**
+     * The URIs that should be reachable while maintenance mode is enabled.
+     *
+     * @var array<int, string>
+     */
+    protected $except = [
+        //
+    ];
 }
