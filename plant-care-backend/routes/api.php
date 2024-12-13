@@ -18,8 +18,10 @@ use App\Http\Controllers\SubscriptionController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 // Example of a protected route
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-    
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::get('/dashboard', [AuthController::class,'dashboard']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
+
 Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);

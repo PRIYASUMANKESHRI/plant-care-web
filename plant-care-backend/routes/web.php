@@ -1,43 +1,26 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SubscriptionController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// Public Routes
+Route::get('/', fn() => Inertia::render('Home'))->name('home');
+Route::get('/about', fn() => Inertia::render('About'))->name('about');
+Route::get('/blogs', fn() => Inertia::render('Blogs'))->name('blogs');
+Route::get('/contact', fn() => Inertia::render('Contact'))->name('contact');
+Route::get('/privacy-policy', fn() => Inertia::render('PrivacyPolicy'))->name('privacy-policy');
+Route::get('/terms-of-service', fn() => Inertia::render('TermsOfService'))->name('terms-of-service');
+Route::get('/help', fn() => Inertia::render('Help'))->name('help');
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+// Auth Routes
+Route::get('/login', fn() => Inertia::render('Auth/Login'))->name('auth.login');
+Route::get('/register', fn() => Inertia::render('Auth/Register'))->name('auth.register');
+
+// Protected Routes
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
+    Route::get('/profile', fn() => Inertia::render('Profile/Edit'))->name('profile.edit');
+    Route::get('/logout', fn() => Inertia::render(  ''))->name('logout');
 });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
-    Route::post('/cancel-subscription', [SubscriptionController::class, 'cancel']);
-});
-
-
 
 require __DIR__.'/auth.php';
