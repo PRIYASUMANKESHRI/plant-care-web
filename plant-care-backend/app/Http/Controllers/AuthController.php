@@ -84,4 +84,13 @@ class AuthController extends Controller
 
         return response()->json(['error' => 'Unauthorized'], 401);
     }
+
+    public function logout(Request $request){
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json(['error'=> 'No authenticated user'], 404);
+        }
+        Auth::logout();
+        return response()->json(['success'=> true],200);
+    }
 }

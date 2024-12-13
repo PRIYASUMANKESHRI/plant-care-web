@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'font-awesome/css/font-awesome.min.css';
+
+/* Import Poppins font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #4cbb17; /* Define the primary color */
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--primary-color); /* Set the background color */
+    color: white; /* Set default text color */
+}
+
+/* Add specific color rules for form inputs */
+input, textarea {
+    color: black; /* Ensure text in inputs is visible */
+}
+
+/* Example of applying the primary color to buttons */
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+button:hover {
+    background-color: darken(var(--primary-color), 10%); /* Darken on hover */
+}
